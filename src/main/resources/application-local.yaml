@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    aws:
+      sqs:
+        endpoint: http://sqs.${spring.cloud.aws.region.static}.localhost.localstack.cloud:4566
+      s3:
+        endpoint: http://s3.${spring.cloud.aws.region.static}.localhost.localstack.cloud:4566
+        bucket: user-bucket
+
+data-population:
+  user:
+    s3:
+      enabled: true
