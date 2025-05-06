@@ -1,14 +1,12 @@
 package io.codlibs.aws.notifications.events;
 
+import io.codlibs.aws.notifications.base.LocalStackSqsS3TestBase;
 import io.codlibs.aws.notifications.dto.QueueMessage;
-import io.codlibs.aws.notifications.ext.LocalStackTestContainerExtension;
 import io.codlibs.aws.notifications.service.UserProfileService;
 import io.codlibs.aws.notifications.service.UserTodosService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.core.io.Resource;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
@@ -25,9 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@ExtendWith(LocalStackTestContainerExtension.class)
-@SpringBootTest
-public class UserSqsListenerTest {
+public class UserSqsListenerTest extends LocalStackSqsS3TestBase {
 
     @Autowired
     private S3AsyncClient s3AsyncClient;
@@ -48,7 +44,7 @@ public class UserSqsListenerTest {
     private UserTodosService userTodosService;
 
     @Test
-    void verifyUserProfile() throws IOException, InterruptedException {
+    void verifyUserProfile() throws IOException {
         uploadToS3("user-profile/12345.json", userProfileResource.getContentAsString(UTF_8));
         uploadToS3("user-todo/12345.json", userTodoResource.getContentAsString(UTF_8));
 

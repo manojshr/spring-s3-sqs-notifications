@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import io.awspring.cloud.sqs.listener.acknowledgement.Acknowledgement;
 import io.codlibs.aws.notifications.dto.QueueMessage;
+import io.codlibs.aws.notifications.service.UserProfileService;
 import io.codlibs.aws.notifications.service.UserService;
+import io.codlibs.aws.notifications.service.UserTodosService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +27,15 @@ public class UserSqsListener {
 
     private final ObjectMapper objectMapper;
 
-    private final UserService userProfileService;
+    private final UserProfileService userProfileService;
 
-    private final UserService userTodosService;
+    private final UserTodosService userTodosService;
 
     private final Logger logger = LoggerFactory.getLogger(UserSqsListener.class);
 
     public UserSqsListener(ObjectMapper objectMapper,
-                           UserService userProfileService,
-                           UserService userTodosService) {
+                           UserProfileService userProfileService,
+                           UserTodosService userTodosService) {
         this.objectMapper = objectMapper;
         this.userProfileService = userProfileService;
         this.userTodosService = userTodosService;
