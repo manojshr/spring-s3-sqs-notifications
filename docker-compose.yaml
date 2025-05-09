@@ -1,0 +1,37 @@
+---
+services:
+  localstack:
+    image: localstack/localstack:4.3.0
+    container_name: localstack
+    hostname: localstack
+    environment:
+      USER: localstack
+    volumes:
+      - localstack-volume:/var/lib/localstack
+    ports:
+      - "127.0.0.1:4510-4560:4510-4560"
+      - "127.0.0.1:4566:4566"
+    networks:
+      - localstack-tf-nw
+    
+  
+  setup-localstack-tf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: setup-localstack-tf:1.0
+    container_name: setup-localstack-tf
+    working_dir: /terraform
+    depends_on:
+      - localstack
+    environment:
+      - TF_IN_AUTOMATION=true
+    networks:
+      - localstack-tf-nw
+
+volumes:
+  localstack-volume:
+
+networks:
+  localstack-tf-nw:
+    driver: bridge
